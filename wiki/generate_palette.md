@@ -57,6 +57,16 @@ Generates a color palette/swatch card from a base color using color theory.
 }
 ```
 
+## Output Examples
+
+**Triadic Palette**
+
+<img src="images/palette_triadic.svg" width="460">
+
+**Monochromatic Palette (8 colors)**
+
+<img src="images/palette_monochromatic.svg" width="560">
+
 ## Response Format
 
 The response contains two content items:

@@ -62,6 +62,12 @@ Generates a word cloud image from a weighted array of words.
 }
 ```
 
+## Output Example
+
+<img src="images/wordcloud_example.svg" width="400">
+
+*Word cloud with vibrant color scheme*
+
 ## Layout Algorithm
 
 Uses d3-cloud for word layout:

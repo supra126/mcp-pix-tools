@@ -60,6 +60,19 @@
 }
 ```
 
+## 輸出範例
+
+<table>
+<tr>
+<td align="center"><strong>預設</strong></td>
+<td align="center"><strong>自訂顏色</strong></td>
+</tr>
+<tr>
+<td><img src="images/placeholder_default.svg" width="200"></td>
+<td><img src="images/placeholder_custom.svg" width="150"></td>
+</tr>
+</table>
+
 ## 圖片特徵
 
 - 純色背景

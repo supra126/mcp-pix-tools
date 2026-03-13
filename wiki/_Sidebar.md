@@ -1,5 +1,6 @@
 **Getting Started**
 - [Home](Home)
+- [Quick Start](Quick-Start)
 - [Installation](Installation)
 - [MCP Configuration](MCP-Configuration)
 - [Docker Deployment](Docker-Deployment)

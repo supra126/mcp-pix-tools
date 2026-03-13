@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <g transform="translate(400,300)">
+    <text text-anchor="middle" transform="translate(-78,-94) rotate(0)" font-size="80" font-family="Arial" fill="#e74c3c">TypeScript</text>
+    <text text-anchor="middle" transform="translate(-15,10) rotate(90)" font-size="70" font-family="Arial" fill="#3498db">MCP</text>
+    <text text-anchor="middle" transform="translate(178,-117) rotate(90)" font-size="65" font-family="Arial" fill="#2ecc71">Claude</text>
+    <text text-anchor="middle" transform="translate(-125,-171) rotate(0)" font-size="60" font-family="Arial" fill="#f39c12">JavaScript</text>
+    <text text-anchor="middle" transform="translate(87,71) rotate(0)" font-size="50" font-family="Arial" fill="#9b59b6">SVG</text>
+    <text text-anchor="middle" transform="translate(240,-52) rotate(90)" font-size="41" font-family="Arial" fill="#1abc9c">Node.js</text>
+    <text text-anchor="middle" transform="translate(-67,-47) rotate(0)" font-size="36" font-family="Arial" fill="#e74c3c">API</text>
+    <text text-anchor="middle" transform="translate(-59,11) rotate(90)" font-size="31" font-family="Arial" fill="#3498db">React</text>
+    <text text-anchor="middle" transform="translate(-145,74) rotate(0)" font-size="26" font-family="Arial" fill="#2ecc71">Barcode</text>
+    <text text-anchor="middle" transform="translate(-106,-20) rotate(0)" font-size="21" font-family="Arial" fill="#f39c12">Docker</text>
+    <text text-anchor="middle" transform="translate(159,53) rotate(0)" font-size="16" font-family="Arial" fill="#9b59b6">Chart</text>
+    <text text-anchor="middle" transform="translate(-155,-35) rotate(90)" font-size="12" font-family="Arial" fill="#1abc9c">Palette</text>
+  </g>
+</svg>

@@ -57,6 +57,16 @@
 }
 ```
 
+## 輸出範例
+
+**三等分配色**
+
+<img src="images/palette_triadic.svg" width="460">
+
+**單色漸變（8 色）**
+
+<img src="images/palette_monochromatic.svg" width="560">
+
 ## 回傳格式
 
 回傳包含兩個 content 項目：

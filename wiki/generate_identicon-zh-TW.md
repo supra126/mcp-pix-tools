@@ -60,6 +60,21 @@
 }
 ```
 
+## 輸出範例
+
+<table>
+<tr>
+<td align="center"><code>"supra126"</code></td>
+<td align="center"><code>"user@example.com"</code></td>
+</tr>
+<tr>
+<td><img src="images/identicon_1.svg" width="128"></td>
+<td><img src="images/identicon_2.svg" width="128"></td>
+</tr>
+</table>
+
+*相同輸入永遠產生相同的唯一圖案*
+
 ## 使用場景
 
 - 使用者預設頭像（根據 email 或 username 生成）

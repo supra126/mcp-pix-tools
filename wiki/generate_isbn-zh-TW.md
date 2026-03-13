@@ -71,6 +71,12 @@
 }
 ```
 
+## 輸出範例
+
+<img src="images/isbn_example.svg" width="340">
+
+*ISBN-13 條碼，含留白與白色背景*
+
 ## 回傳格式
 
 回傳包含兩個 content 項目：

@@ -62,6 +62,12 @@
 }
 ```
 
+## 輸出範例
+
+<img src="images/wordcloud_example.svg" width="400">
+
+*使用 vibrant 配色方案的詞雲*
+
 ## 佈局演算法
 
 使用 d3-cloud 進行詞彙佈局：

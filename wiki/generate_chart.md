@@ -91,6 +91,23 @@ Generates simple charts from data. Supports bar charts, pie charts, and line cha
 }
 ```
 
+## Output Examples
+
+<table>
+<tr>
+<td align="center"><strong>Bar Chart</strong></td>
+<td align="center"><strong>Pie Chart</strong></td>
+</tr>
+<tr>
+<td><img src="images/chart_bar.svg" width="300"></td>
+<td><img src="images/chart_pie.svg" width="250"></td>
+</tr>
+</table>
+
+<img src="images/chart_line.svg" width="400">
+
+*Line chart with custom color*
+
 ## Built-in Colors
 
 When `colors` is not specified, the following 10 colors are used in rotation:

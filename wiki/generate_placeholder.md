@@ -60,6 +60,19 @@ Generates an 800x600 gray background with "800x600" text in the center.
 }
 ```
 
+## Output Examples
+
+<table>
+<tr>
+<td align="center"><strong>Default</strong></td>
+<td align="center"><strong>Custom Colors</strong></td>
+</tr>
+<tr>
+<td><img src="images/placeholder_default.svg" width="200"></td>
+<td><img src="images/placeholder_custom.svg" width="150"></td>
+</tr>
+</table>
+
 ## Image Characteristics
 
 - Solid color background

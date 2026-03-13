@@ -91,6 +91,23 @@
 }
 ```
 
+## 輸出範例
+
+<table>
+<tr>
+<td align="center"><strong>長條圖</strong></td>
+<td align="center"><strong>圓餅圖</strong></td>
+</tr>
+<tr>
+<td><img src="images/chart_bar.svg" width="300"></td>
+<td><img src="images/chart_pie.svg" width="250"></td>
+</tr>
+</table>
+
+<img src="images/chart_line.svg" width="400">
+
+*自訂顏色的折線圖*
+
 ## 內建色彩
 
 未指定 `colors` 時使用以下 10 色循環：

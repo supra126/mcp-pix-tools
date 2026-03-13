@@ -24,6 +24,7 @@ mcp-pix-tools 是一個 [MCP (Model Context Protocol)](https://modelcontextproto
 
 ## 快速導覽
 
+- **[快速開始](Quick-Start-zh-TW)** — 2 分鐘內跑起來
 - [安裝指南](Installation-zh-TW)
 - [MCP 設定](MCP-Configuration-zh-TW)
 - [Docker 部署](Docker-Deployment-zh-TW)

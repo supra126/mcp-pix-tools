@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="500" viewBox="0 0 500 500">
+  <rect width="500" height="500" fill="white"/>
+  <text x="250" y="25" text-anchor="middle" font-size="16" font-weight="bold" font-family="Arial" fill="#333">Browser Market Share</text>
+  <path d="M 250 265 L 250 75 A 190 190 0 1 1 96.28677106876 376.6791979355699 Z" fill="#3498db" stroke="white" stroke-width="2"/>
+  <text x="441.5664027004991" y="362.6079574440026" text-anchor="middle" font-size="10" font-family="Arial" fill="#333">Chrome (65.0%)</text>
+  <path d="M 250 265 L 96.28677106876 376.6791979355699 A 190 190 0 0 1 69.29926190392081 206.28677106876 Z" fill="#e74c3c" stroke="white" stroke-width="2"/>
+  <text x="37.647006772045415" y="298.63340998364964" text-anchor="middle" font-size="10" font-family="Arial" fill="#333">Firefox (15.0%)</text>
+  <path d="M 250 265 L 69.29926190392081 206.28677106876 A 190 190 0 0 1 158.4668019206741 98.50173079166592 Z" fill="#2ecc71" stroke="white" stroke-width="2"/>
+  <text x="84.3396528032053" y="127.95384220403173" text-anchor="middle" font-size="10" font-family="Arial" fill="#333">Safari (12.0%)</text>
+  <path d="M 250 265 L 158.4668019206741 98.50173079166592 A 190 190 0 0 1 214.3975502287123 78.36542236154915 Z" fill="#f39c12" stroke="white" stroke-width="2"/>
+  <text x="177.17134714726234" y="62.710634674841515" text-anchor="middle" font-size="10" font-family="Arial" fill="#333">Edge (5.0%)</text>
+  <path d="M 250 265 L 214.3975502287123 78.36542236154915 A 190 190 0 0 1 249.99999999999997 75 Z" fill="#9b59b6" stroke="white" stroke-width="2"/>
+  <text x="229.7667126365195" y="50.95417761033781" text-anchor="middle" font-size="10" font-family="Arial" fill="#333">Other (3.0%)</text>
+</svg>

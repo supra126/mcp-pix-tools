@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="564" height="92" viewBox="0 0 564 92">
+  <rect x="0" y="0" width="60" height="60" rx="8" fill="#1A4C6B"/>
+  <text x="30" y="76" text-anchor="middle" font-size="11" font-family="monospace" fill="#333">#1A4C6B</text>
+  <rect x="72" y="0" width="60" height="60" rx="8" fill="#236590"/>
+  <text x="102" y="76" text-anchor="middle" font-size="11" font-family="monospace" fill="#333">#236590</text>
+  <rect x="144" y="0" width="60" height="60" rx="8" fill="#2D7DB4"/>
+  <text x="174" y="76" text-anchor="middle" font-size="11" font-family="monospace" fill="#333">#2D7DB4</text>
+  <rect x="216" y="0" width="60" height="60" rx="8" fill="#3498DB"/>
+  <text x="246" y="76" text-anchor="middle" font-size="11" font-family="monospace" fill="#333">#3498DB</text>
+  <rect x="288" y="0" width="60" height="60" rx="8" fill="#5AADE1"/>
+  <text x="318" y="76" text-anchor="middle" font-size="11" font-family="monospace" fill="#333">#5AADE1</text>
+  <rect x="360" y="0" width="60" height="60" rx="8" fill="#80C3E8"/>
+  <text x="390" y="76" text-anchor="middle" font-size="11" font-family="monospace" fill="#333">#80C3E8</text>
+  <rect x="432" y="0" width="60" height="60" rx="8" fill="#A6D8EE"/>
+  <text x="462" y="76" text-anchor="middle" font-size="11" font-family="monospace" fill="#333">#A6D8EE</text>
+  <rect x="504" y="0" width="60" height="60" rx="8" fill="#CCE8F5"/>
+  <text x="534" y="76" text-anchor="middle" font-size="11" font-family="monospace" fill="#333">#CCE8F5</text>
+</svg>

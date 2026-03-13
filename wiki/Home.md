@@ -26,6 +26,7 @@ All tools support both **PNG** (base64) and **SVG** (text) output formats.
 
 ## Quick Navigation
 
+- **[Quick Start](Quick-Start)** — up and running in 2 minutes
 - [Installation](Installation)
 - [MCP Configuration](MCP-Configuration)
 - [Docker Deployment](Docker-Deployment)

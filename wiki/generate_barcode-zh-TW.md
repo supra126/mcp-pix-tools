@@ -94,6 +94,19 @@
 }
 ```
 
+## 輸出範例
+
+<table>
+<tr>
+<td align="center"><strong>QR Code</strong></td>
+<td align="center"><strong>Code 128</strong></td>
+</tr>
+<tr>
+<td><img src="images/barcode_qrcode.svg" width="200"></td>
+<td><img src="images/barcode_code128.svg" width="300"></td>
+</tr>
+</table>
+
 ## 回傳格式
 
 - **PNG**: `{ type: "image", data: "<base64>", mimeType: "image/png" }`

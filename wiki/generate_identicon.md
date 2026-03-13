@@ -60,6 +60,21 @@ Generates a unique geometric avatar (identicon) based on an input string.
 }
 ```
 
+## Output Examples
+
+<table>
+<tr>
+<td align="center"><code>"supra126"</code></td>
+<td align="center"><code>"user@example.com"</code></td>
+</tr>
+<tr>
+<td><img src="images/identicon_1.svg" width="128"></td>
+<td><img src="images/identicon_2.svg" width="128"></td>
+</tr>
+</table>
+
+*Same input always produces the same unique pattern*
+
 ## Use Cases
 
 - Default user avatars (generated from email or username)

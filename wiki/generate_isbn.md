@@ -71,6 +71,12 @@ Hyphens and spaces in the input ISBN are automatically stripped:
 }
 ```
 
+## Output Example
+
+<img src="images/isbn_example.svg" width="340">
+
+*ISBN-13 barcode with padding and white background*
+
 ## Response Format
 
 The response contains two content items:

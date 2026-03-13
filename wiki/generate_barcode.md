@@ -94,6 +94,19 @@ Generates barcode images in various formats. Supports 15 barcode types.
 }
 ```
 
+## Output Examples
+
+<table>
+<tr>
+<td align="center"><strong>QR Code</strong></td>
+<td align="center"><strong>Code 128</strong></td>
+</tr>
+<tr>
+<td><img src="images/barcode_qrcode.svg" width="200"></td>
+<td><img src="images/barcode_code128.svg" width="300"></td>
+</tr>
+</table>
+
 ## Response Format
 
 - **PNG**: `{ type: "image", data: "<base64>", mimeType: "image/png" }`
