@@ -1,6 +1,6 @@
 import { existsSync } from "node:fs";
-import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import type { Client } from "@modelcontextprotocol/sdk/client/index.js";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createTestClient } from "./helpers.js";
 
 type ContentItem = { type: string; text?: string; data?: string; mimeType?: string };

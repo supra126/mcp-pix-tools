@@ -1,7 +1,7 @@
-import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { resolve } from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
-import { resolve } from "node:path";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 const BIN = resolve(import.meta.dirname, "../../dist/index.js");
 

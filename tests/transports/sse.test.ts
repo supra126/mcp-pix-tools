@@ -1,8 +1,8 @@
-import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { type ChildProcess, spawn } from "node:child_process";
+import { resolve } from "node:path";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { SSEClientTransport } from "@modelcontextprotocol/sdk/client/sse.js";
-import { spawn, type ChildProcess } from "node:child_process";
-import { resolve } from "node:path";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 const BIN = resolve(import.meta.dirname, "../../dist/index.js");
 const PORT = 13_579; // use an uncommon port to avoid conflicts
