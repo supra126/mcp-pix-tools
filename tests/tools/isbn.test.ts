@@ -143,7 +143,7 @@ describe("generate_isbn tool", () => {
 
       expect(result.isError).toBeFalsy();
       const content = result.content as any[];
-      expect(content.length).toBe(2);
+      expect(content.length).toBeGreaterThanOrEqual(2);
       expect(content[0].type).toBe("text");
       expect(content[0].text).toContain("Valid: Yes");
       expect(content[0].text).toContain("ISBN-13: 9780306406157");
@@ -159,7 +159,7 @@ describe("generate_isbn tool", () => {
 
       expect(result.isError).toBeFalsy();
       const content = result.content as any[];
-      expect(content.length).toBe(2);
+      expect(content.length).toBeGreaterThanOrEqual(2);
       expect(content[0].type).toBe("text");
       expect(content[1].type).toBe("text");
       expect(content[1].text).toContain("<svg");

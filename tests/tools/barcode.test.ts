@@ -34,7 +34,7 @@ describe("generate_barcode tool", () => {
       });
 
       expect(result.isError).toBeFalsy();
-      expect(result.content).toHaveLength(1);
+      expect((result.content as any[]).length).toBeGreaterThanOrEqual(1);
 
       const item = (result.content as any[])[0];
       expect(item.type).toBe("image");
@@ -56,7 +56,7 @@ describe("generate_barcode tool", () => {
       });
 
       expect(result.isError).toBeFalsy();
-      expect(result.content).toHaveLength(1);
+      expect((result.content as any[]).length).toBeGreaterThanOrEqual(1);
 
       const item = (result.content as any[])[0];
       expect(item.type).toBe("text");

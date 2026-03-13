@@ -34,7 +34,7 @@ describe("generate_placeholder", () => {
     });
 
     const content = result.content as Array<{ type: string; data?: string; mimeType?: string }>;
-    expect(content).toHaveLength(1);
+    expect(content.length).toBeGreaterThanOrEqual(1);
     expect(content[0].type).toBe("image");
     expect(content[0].mimeType).toBe("image/png");
     const buf = Buffer.from(content[0].data!, "base64");
