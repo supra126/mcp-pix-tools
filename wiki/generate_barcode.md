@@ -15,6 +15,7 @@ Generates barcode images in various formats. Supports 15 barcode types.
 | `bgColor` | string | No | — | Background color (6-digit hex, e.g. `ffffff`) |
 | `width` | number | No | — | Width (mm) |
 | `height` | number | No | — | Height (mm) |
+| `padding` | number (0-20) | No | — | Quiet-zone padding around the barcode (in module-width units). Adds a white background automatically unless `bgColor` is specified. |
 
 ## Supported Barcode Types
 
@@ -68,6 +69,17 @@ Generates barcode images in various formats. Supports 15 barcode types.
   "type": "ean13",
   "text": "4710088430404",
   "format": "svg"
+}
+```
+
+### QR Code with Padding
+
+```json
+{
+  "type": "qrcode",
+  "text": "https://example.com",
+  "padding": 4,
+  "scale": 5
 }
 ```
 

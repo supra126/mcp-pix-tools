@@ -1,6 +1,7 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import sharp from "sharp";
 import { z } from "zod";
+import { saveToTempFile } from "../save.js";
 
 interface HSL {
   h: number;
@@ -196,14 +197,18 @@ export function registerPaletteTool(server: McpServer): void {
         });
 
         if (format === "svg") {
+          const filePath = saveToTempFile("palette", svg, "svg");
           content.push({ type: "text" as const, text: svg });
+          content.push({ type: "text" as const, text: `Saved to: ${filePath}` });
         } else {
           const pngBuffer = await sharp(Buffer.from(svg)).png().toBuffer();
+          const filePath = saveToTempFile("palette", pngBuffer, "png");
           content.push({
             type: "image" as const,
             data: pngBuffer.toString("base64"),
             mimeType: "image/png",
           });
+          content.push({ type: "text" as const, text: `Saved to: ${filePath}` });
         }
 
         return { content };

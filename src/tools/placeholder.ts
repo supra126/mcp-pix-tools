@@ -1,6 +1,7 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import sharp from "sharp";
 import { z } from "zod";
+import { saveToTempFile } from "../save.js";
 
 function generatePlaceholderSVG(
   width: number,
@@ -52,12 +53,17 @@ export function registerPlaceholderTool(server: McpServer): void {
         const svg = generatePlaceholderSVG(width, height, bgColor, textColor, displayText);
 
         if (format === "svg") {
+          const filePath = saveToTempFile("placeholder", svg, "svg");
           return {
-            content: [{ type: "text" as const, text: svg }],
+            content: [
+              { type: "text" as const, text: svg },
+              { type: "text" as const, text: `Saved to: ${filePath}` },
+            ],
           };
         }
 
         const pngBuffer = await sharp(Buffer.from(svg)).png().toBuffer();
+        const filePath = saveToTempFile("placeholder", pngBuffer, "png");
         return {
           content: [
             {
@@ -65,6 +71,7 @@ export function registerPlaceholderTool(server: McpServer): void {
               data: pngBuffer.toString("base64"),
               mimeType: "image/png",
             },
+            { type: "text" as const, text: `Saved to: ${filePath}` },
           ],
         };
       } catch (error) {

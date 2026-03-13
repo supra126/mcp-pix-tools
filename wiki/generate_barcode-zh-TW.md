@@ -15,6 +15,7 @@
 | `bgColor` | string | 否 | — | 背景顏色（6 位 hex，如 `ffffff`） |
 | `width` | number | 否 | — | 寬度（mm） |
 | `height` | number | 否 | — | 高度（mm） |
+| `padding` | number (0-20) | 否 | — | 條碼周圍的靜區留白（單位為模組寬度）。設定時會自動加上白色背景，除非已指定 `bgColor`。 |
 
 ## 支援的條碼類型
 
@@ -68,6 +69,17 @@
   "type": "ean13",
   "text": "4710088430404",
   "format": "svg"
+}
+```
+
+### 帶留白的 QR Code
+
+```json
+{
+  "type": "qrcode",
+  "text": "https://example.com",
+  "padding": 4,
+  "scale": 5
 }
 ```
 

@@ -1,6 +1,6 @@
 {
   "name": "mcp-pix-tools",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Programmatic image generation MCP tools — barcodes, word clouds, palettes, charts & more. Zero AI cost.",
   "type": "module",
   "main": "./dist/index.js",

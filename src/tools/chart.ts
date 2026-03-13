@@ -1,6 +1,7 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import sharp from "sharp";
 import { z } from "zod";
+import { saveToTempFile } from "../save.js";
 
 const DEFAULT_COLORS = [
   "#3498db",
@@ -55,10 +56,14 @@ function generateBarChartSVG(
       const barH = (d.value / maxVal) * chartH;
       const y = margin.top + chartH - barH;
       const color = colors[i % colors.length];
+      const valueLabel =
+        d.value > 0
+          ? `<text x="${x + barWidth / 2}" y="${y - 5}" text-anchor="middle" font-size="10" font-family="Arial" fill="#333">${d.value}</text>`
+          : "";
       return `
-    <rect x="${x}" y="${y}" width="${barWidth}" height="${barH}" fill="${color}" rx="3"/>
+    <rect x="${x}" y="${y}" width="${barWidth}" height="${Math.max(barH, 1)}" fill="${color}" rx="3"/>
     <text x="${x + barWidth / 2}" y="${margin.top + chartH + 20}" text-anchor="middle" font-size="11" font-family="Arial" fill="#555">${escapeXml(d.label)}</text>
-    <text x="${x + barWidth / 2}" y="${y - 5}" text-anchor="middle" font-size="10" font-family="Arial" fill="#333">${d.value}</text>`;
+    ${valueLabel}`;
     })
     .join("");
 
@@ -91,7 +96,28 @@ function generatePieChartSVG(
   const cx = width / 2;
   const cy = height / 2 + 15;
   const radius = Math.min(width, height) / 2 - 60;
-  const total = data.reduce((sum, d) => sum + d.value, 0) || 1;
+  const total = data.reduce((sum, d) => sum + d.value, 0);
+
+  if (total === 0) {
+    // All values are zero — render a grey placeholder circle with labels
+    const sliceLabels = data
+      .map((d, i) => {
+        const angle = -Math.PI / 2 + ((i + 0.5) / data.length) * 2 * Math.PI;
+        const labelR = radius + 25;
+        const lx = cx + labelR * Math.cos(angle);
+        const ly = cy + labelR * Math.sin(angle);
+        return `<text x="${lx}" y="${ly}" text-anchor="middle" font-size="10" font-family="Arial" fill="#333">${escapeXml(d.label)} (0.0%)</text>`;
+      })
+      .join("\n  ");
+
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+  <rect width="${width}" height="${height}" fill="white"/>
+  <text x="${width / 2}" y="25" text-anchor="middle" font-size="16" font-weight="bold" font-family="Arial" fill="#333">${escapeXml(title)}</text>
+  <circle cx="${cx}" cy="${cy}" r="${radius}" fill="#eee" stroke="white" stroke-width="2"/>
+  <text x="${cx}" y="${cy + 4}" text-anchor="middle" font-size="12" font-family="Arial" fill="#999">No data</text>
+  ${sliceLabels}
+</svg>`;
+  }
 
   let startAngle = -Math.PI / 2;
   const slices = data
@@ -99,13 +125,20 @@ function generatePieChartSVG(
       const fraction = d.value / total;
       const endAngle = startAngle + fraction * 2 * Math.PI;
 
+      const color = colors[i % colors.length];
+
+      // Skip zero-value slices — degenerate arcs with identical start/end points
+      if (fraction === 0) {
+        startAngle = endAngle;
+        return "";
+      }
+
       // Label position
       const midAngle = (startAngle + endAngle) / 2;
       const labelR = radius + 25;
       const lx = cx + labelR * Math.cos(midAngle);
       const ly = cy + labelR * Math.sin(midAngle);
 
-      const color = colors[i % colors.length];
       const label = `<text x="${lx}" y="${ly}" text-anchor="middle" font-size="10" font-family="Arial" fill="#333">${escapeXml(d.label)} (${(fraction * 100).toFixed(1)}%)</text>`;
 
       let path: string;
@@ -247,12 +280,17 @@ export function registerChartTool(server: McpServer): void {
         }
 
         if (format === "svg") {
+          const filePath = saveToTempFile("chart", svg, "svg");
           return {
-            content: [{ type: "text" as const, text: svg }],
+            content: [
+              { type: "text" as const, text: svg },
+              { type: "text" as const, text: `Saved to: ${filePath}` },
+            ],
           };
         }
 
         const pngBuffer = await sharp(Buffer.from(svg)).png().toBuffer();
+        const filePath = saveToTempFile("chart", pngBuffer, "png");
         return {
           content: [
             {
@@ -260,6 +298,7 @@ export function registerChartTool(server: McpServer): void {
               data: pngBuffer.toString("base64"),
               mimeType: "image/png",
             },
+            { type: "text" as const, text: `Saved to: ${filePath}` },
           ],
         };
       } catch (error) {

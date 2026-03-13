@@ -2,6 +2,7 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import cloud from "d3-cloud";
 import sharp from "sharp";
 import { z } from "zod";
+import { saveToTempFile } from "../save.js";
 
 const COLOR_SCHEMES: Record<string, string[]> = {
   vibrant: ["#e74c3c", "#3498db", "#2ecc71", "#f39c12", "#9b59b6", "#1abc9c"],
@@ -22,6 +23,136 @@ interface WordItem {
 
 function estimateTextWidth(text: string, fontSize: number): number {
   return text.length * fontSize * 0.6;
+}
+
+/**
+ * Creates a headless canvas that satisfies d3-cloud's full canvas API requirements.
+ *
+ * d3-cloud uses canvas for two things:
+ *   1. measureText() — estimate word widths
+ *   2. Sprite-based collision detection — fillText() to paint glyphs,
+ *      then getImageData() to read back pixels and build bitmasks.
+ *
+ * This implementation approximates fillText by filling the text's bounding
+ * rectangle (red channel > 0), which is sufficient for collision detection.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function createHeadlessCanvas(): any {
+  let _width = 1;
+  let _height = 1;
+  let _pixels = new Uint8ClampedArray(4);
+
+  let _tx = 0;
+  let _ty = 0;
+  let _rotation = 0;
+  const _stack: Array<{ tx: number; ty: number; rotation: number }> = [];
+
+  const context = {
+    font: "",
+    fillStyle: "",
+    strokeStyle: "",
+    lineWidth: 1,
+
+    save() {
+      _stack.push({ tx: _tx, ty: _ty, rotation: _rotation });
+    },
+
+    restore() {
+      const state = _stack.pop();
+      if (state) {
+        _tx = state.tx;
+        _ty = state.ty;
+        _rotation = state.rotation;
+      }
+    },
+
+    translate(x: number, y: number) {
+      _tx += x;
+      _ty += y;
+    },
+
+    rotate(angle: number) {
+      _rotation += angle;
+    },
+
+    measureText(text: string) {
+      const match = /(\d+)px/.exec(this.font);
+      const fontSize = match ? parseInt(match[1], 10) : 16;
+      return { width: estimateTextWidth(text, fontSize) };
+    },
+
+    clearRect(_x: number, _y: number, _w: number, _h: number) {
+      _pixels.fill(0);
+    },
+
+    fillText(text: string, x: number, _y: number) {
+      const match = /(\d+)px/.exec(this.font);
+      const fontSize = match ? parseInt(match[1], 10) : 16;
+      const textWidth = estimateTextWidth(text, fontSize);
+
+      // Text bounding box in local coordinates (relative to current transform).
+      // Baseline is at y=0; ascent is roughly 0.8em, descent roughly 0.2em.
+      const x0 = x;
+      const x1 = x + textWidth;
+      const y0 = -fontSize * 0.8;
+      const y1 = fontSize * 0.2;
+
+      // Rotate corners and translate to canvas coordinates.
+      const cos = Math.cos(_rotation);
+      const sin = Math.sin(_rotation);
+
+      const corners = [
+        [x0, y0],
+        [x1, y0],
+        [x0, y1],
+        [x1, y1],
+      ].map(([cx, cy]) => [
+        Math.round(_tx + cx * cos - cy * sin),
+        Math.round(_ty + cx * sin + cy * cos),
+      ]);
+
+      const minX = Math.max(0, Math.min(...corners.map((c) => c[0])));
+      const maxX = Math.min(_width, Math.max(...corners.map((c) => c[0])));
+      const minY = Math.max(0, Math.min(...corners.map((c) => c[1])));
+      const maxY = Math.min(_height, Math.max(...corners.map((c) => c[1])));
+
+      // Paint the red channel so d3-cloud's pixel scan detects occupation.
+      for (let py = minY; py < maxY; py++) {
+        for (let px = minX; px < maxX; px++) {
+          const idx = (py * _width + px) << 2;
+          if (idx >= 0 && idx < _pixels.length) {
+            _pixels[idx] = 255;
+          }
+        }
+      }
+    },
+
+    strokeText() {},
+
+    getImageData(_sx: number, _sy: number, sw: number, sh: number) {
+      // d3-cloud always requests the full canvas (sx=0, sy=0),
+      // so we can return the buffer directly for performance.
+      return { data: _pixels, width: sw, height: sh };
+    },
+  };
+
+  return {
+    get width() {
+      return _width;
+    },
+    set width(w: number) {
+      _width = w;
+      _pixels = new Uint8ClampedArray(w * _height * 4);
+    },
+    get height() {
+      return _height;
+    },
+    set height(h: number) {
+      _height = h;
+      _pixels = new Uint8ClampedArray(_width * h * 4);
+    },
+    getContext: () => context,
+  };
 }
 
 function generateWordCloudSVG(
@@ -90,22 +221,6 @@ export function registerWordcloudTool(server: McpServer): void {
           size: minFontSize + ((w.weight - minWeight) / weightRange) * (maxFontSize - minFontSize),
         }));
 
-        // Create a fake canvas context for d3-cloud text measurement
-        // d3-cloud needs canvas.getContext("2d").measureText()
-        let currentFontSize = 16;
-        const fakeContext = {
-          font: "",
-          measureText(text: string) {
-            // Parse font size from the CSS font string that d3-cloud sets
-            const match = /(\d+)px/.exec(this.font);
-            if (match) currentFontSize = parseInt(match[1], 10);
-            return { width: estimateTextWidth(text, currentFontSize) };
-          },
-        };
-        const fakeCanvas = {
-          getContext: () => fakeContext,
-        };
-
         const placedWords = await new Promise<WordItem[]>((resolve, reject) => {
           const layout = cloud<{ text: string; size: number }>()
             .size([width, height])
@@ -114,8 +229,7 @@ export function registerWordcloudTool(server: McpServer): void {
             .rotate(() => (Math.random() > 0.5 ? 0 : 90))
             .font(fontFamily)
             .fontSize((d) => d.size!)
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            .canvas(() => fakeCanvas as any)
+            .canvas(createHeadlessCanvas)
             .on(
               "end",
               (
@@ -162,12 +276,17 @@ export function registerWordcloudTool(server: McpServer): void {
         const svg = generateWordCloudSVG(placedWords, width, height, colors);
 
         if (format === "svg") {
+          const filePath = saveToTempFile("wordcloud", svg, "svg");
           return {
-            content: [{ type: "text" as const, text: svg }],
+            content: [
+              { type: "text" as const, text: svg },
+              { type: "text" as const, text: `Saved to: ${filePath}` },
+            ],
           };
         }
 
         const pngBuffer = await sharp(Buffer.from(svg)).png().toBuffer();
+        const filePath = saveToTempFile("wordcloud", pngBuffer, "png");
         return {
           content: [
             {
@@ -175,6 +294,7 @@ export function registerWordcloudTool(server: McpServer): void {
               data: pngBuffer.toString("base64"),
               mimeType: "image/png",
             },
+            { type: "text" as const, text: `Saved to: ${filePath}` },
           ],
         };
       } catch (error) {

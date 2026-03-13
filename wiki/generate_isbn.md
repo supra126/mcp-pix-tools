@@ -10,6 +10,8 @@ Generates ISBN barcodes with check digit validation and ISBN-10/13 format conver
 | `format` | `"png"` \| `"svg"` | No | `"png"` | Output format |
 | `scale` | number (1-10) | No | `3` | Scale multiplier |
 | `includeText` | boolean | No | `true` | Whether to display ISBN text |
+| `bgColor` | string | No | — | Background color (6-digit hex, e.g. `ffffff`) |
+| `padding` | number (0-20) | No | — | Quiet-zone padding around the barcode (in module-width units). Adds a white background automatically unless `bgColor` is specified. |
 
 ## Features
 

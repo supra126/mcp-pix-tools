@@ -2,6 +2,7 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import * as jdenticon from "jdenticon";
 import sharp from "sharp";
 import { z } from "zod";
+import { saveToTempFile } from "../save.js";
 
 export function registerIdenticonTool(server: McpServer): void {
   server.tool(
@@ -33,14 +34,19 @@ export function registerIdenticonTool(server: McpServer): void {
 
         if (format === "svg") {
           const svg = jdenticon.toSvg(value, size, config);
+          const filePath = saveToTempFile("identicon", svg, "svg");
           return {
-            content: [{ type: "text" as const, text: svg }],
+            content: [
+              { type: "text" as const, text: svg },
+              { type: "text" as const, text: `Saved to: ${filePath}` },
+            ],
           };
         }
 
         // Generate SVG then convert to PNG via sharp
         const svg = jdenticon.toSvg(value, size, config);
         const pngBuffer = await sharp(Buffer.from(svg)).resize(size, size).png().toBuffer();
+        const filePath = saveToTempFile("identicon", pngBuffer, "png");
 
         return {
           content: [
@@ -49,6 +55,7 @@ export function registerIdenticonTool(server: McpServer): void {
               data: pngBuffer.toString("base64"),
               mimeType: "image/png",
             },
+            { type: "text" as const, text: `Saved to: ${filePath}` },
           ],
         };
       } catch (error) {

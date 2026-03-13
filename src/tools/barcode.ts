@@ -2,6 +2,7 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 // @ts-expect-error bwip-js .d.ts uses `export =` but .mjs uses `export default`
 import bwipjs from "bwip-js";
 import { z } from "zod";
+import { saveToTempFile } from "../save.js";
 
 const SUPPORTED_TYPES = [
   "qrcode",
@@ -43,8 +44,16 @@ export function registerBarcodeTool(server: McpServer): void {
         .describe("Background color in hex (e.g. 'ffffff')"),
       width: z.number().optional().describe("Width in mm (optional)"),
       height: z.number().optional().describe("Height in mm (optional)"),
+      padding: z
+        .number()
+        .min(0)
+        .max(20)
+        .optional()
+        .describe(
+          "Quiet-zone padding around the barcode (in barcode module-width units, 0-20). When set, a white background is automatically applied unless bgColor is specified.",
+        ),
     },
-    async ({ type, text, format, scale, includeText, color, bgColor, width, height }) => {
+    async ({ type, text, format, scale, includeText, color, bgColor, width, height, padding }) => {
       try {
         const options: bwipjs.RenderOptions = {
           bcid: type,
@@ -58,20 +67,27 @@ export function registerBarcodeTool(server: McpServer): void {
         if (bgColor) options.backgroundcolor = bgColor;
         if (width) options.width = width;
         if (height) options.height = height;
+        if (padding != null) {
+          options.paddingleft = padding;
+          options.paddingright = padding;
+          options.paddingtop = padding;
+          options.paddingbottom = padding;
+          if (!bgColor) options.backgroundcolor = "ffffff";
+        }
 
         if (format === "svg") {
           const svg = bwipjs.toSVG(options);
+          const filePath = saveToTempFile("barcode", svg, "svg");
           return {
             content: [
-              {
-                type: "text" as const,
-                text: svg,
-              },
+              { type: "text" as const, text: svg },
+              { type: "text" as const, text: `Saved to: ${filePath}` },
             ],
           };
         }
 
         const pngBuffer = await bwipjs.toBuffer(options);
+        const filePath = saveToTempFile("barcode", pngBuffer, "png");
         return {
           content: [
             {
@@ -79,6 +95,7 @@ export function registerBarcodeTool(server: McpServer): void {
               data: pngBuffer.toString("base64"),
               mimeType: "image/png",
             },
+            { type: "text" as const, text: `Saved to: ${filePath}` },
           ],
         };
       } catch (error) {

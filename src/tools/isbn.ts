@@ -2,6 +2,7 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 // @ts-expect-error bwip-js .d.ts uses `export =` but .mjs uses `export default`
 import bwipjs from "bwip-js";
 import { z } from "zod";
+import { saveToTempFile } from "../save.js";
 
 function validateISBN10(isbn: string): boolean {
   if (isbn.length !== 10) return false;
@@ -59,8 +60,21 @@ export function registerIsbnTool(server: McpServer): void {
       format: z.enum(["png", "svg"]).default("png").describe("Output format"),
       scale: z.number().min(1).max(10).default(3).describe("Scale factor"),
       includeText: z.boolean().default(true).describe("Show ISBN text below barcode"),
+      bgColor: z
+        .string()
+        .regex(/^[0-9a-fA-F]{6}$/)
+        .optional()
+        .describe("Background color in hex (e.g. 'ffffff')"),
+      padding: z
+        .number()
+        .min(0)
+        .max(20)
+        .optional()
+        .describe(
+          "Quiet-zone padding around the barcode (in barcode module-width units, 0-20). When set, a white background is automatically applied.",
+        ),
     },
-    async ({ isbn, format, scale, includeText }) => {
+    async ({ isbn, format, scale, includeText, bgColor, padding }) => {
       const cleaned = isbn.replace(/[-\s]/g, "");
 
       // Validate structure: ISBN-10 allows digits + trailing X, ISBN-13 is digits only
@@ -117,6 +131,14 @@ export function registerIsbnTool(server: McpServer): void {
           textxalign: "center",
           guardwhitespace: true,
         };
+        if (bgColor) options.backgroundcolor = bgColor;
+        if (padding != null) {
+          options.paddingleft = padding;
+          options.paddingright = padding;
+          options.paddingtop = padding;
+          options.paddingbottom = padding;
+          if (!bgColor) options.backgroundcolor = "ffffff";
+        }
 
         const content: Array<
           { type: "text"; text: string } | { type: "image"; data: string; mimeType: string }
@@ -126,14 +148,18 @@ export function registerIsbnTool(server: McpServer): void {
 
         if (format === "svg") {
           const svg = bwipjs.toSVG(options);
+          const filePath = saveToTempFile("isbn", svg, "svg");
           content.push({ type: "text" as const, text: svg });
+          content.push({ type: "text" as const, text: `Saved to: ${filePath}` });
         } else {
           const pngBuffer = await bwipjs.toBuffer(options);
+          const filePath = saveToTempFile("isbn", pngBuffer, "png");
           content.push({
             type: "image" as const,
             data: pngBuffer.toString("base64"),
             mimeType: "image/png",
           });
+          content.push({ type: "text" as const, text: `Saved to: ${filePath}` });
         }
 
         return { content };

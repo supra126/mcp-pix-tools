@@ -10,6 +10,8 @@
 | `format` | `"png"` \| `"svg"` | 否 | `"png"` | 輸出格式 |
 | `scale` | number (1-10) | 否 | `3` | 縮放倍率 |
 | `includeText` | boolean | 否 | `true` | 是否顯示 ISBN 文字 |
+| `bgColor` | string | 否 | — | 背景顏色（6 位 hex，如 `ffffff`） |
+| `padding` | number (0-20) | 否 | — | 條碼周圍的靜區留白（單位為模組寬度）。設定時會自動加上白色背景，除非已指定 `bgColor`。 |
 
 ## 功能特色
 
