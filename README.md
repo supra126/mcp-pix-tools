@@ -113,10 +113,6 @@ docker build -t mcp-pix-tools .
 docker run -p 3100:3100 mcp-pix-tools
 ```
 
-### Coolify
-
-Point Coolify to this GitHub repo. It will auto-detect the Dockerfile and build. Set the exposed port to `3100`.
-
 ## Tool Examples
 
 <details>

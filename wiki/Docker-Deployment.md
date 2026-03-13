@@ -40,14 +40,6 @@ services:
       retries: 3
 ```
 
-## Coolify Deployment
-
-1. Add a new Application in Coolify
-2. Point to the GitHub repo `supra126/mcp-pix-tools`
-3. Coolify will auto-detect the Dockerfile and build it
-4. Set the exposed port to `3100`
-5. Once deployed, the SSE endpoint is `http://your-domain:3100/sse`
-
 ## Docker Image Details
 
 The Dockerfile uses a multi-stage build:

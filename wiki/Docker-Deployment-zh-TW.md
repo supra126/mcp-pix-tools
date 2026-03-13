@@ -40,14 +40,6 @@ services:
       retries: 3
 ```
 
-## Coolify 部署
-
-1. 在 Coolify 中新增 Application
-2. 指向 GitHub repo `supra126/mcp-pix-tools`
-3. Coolify 會自動偵測 Dockerfile 並建置
-4. 設定 exposed port 為 `3100`
-5. 部署完成後，SSE 端點為 `http://your-domain:3100/sse`
-
 ## Docker 映像檔說明
 
 Dockerfile 採用多階段建置：
