@@ -1,7 +1,7 @@
 import { createRequire } from "node:module";
 import { createServer } from "./server.js";
-import { startSSE } from "./transports/sse.js";
 import { startStdio } from "./transports/stdio.js";
+import { startHTTP } from "./transports/streamableHttp.js";
 
 const require = createRequire(import.meta.url);
 const { version: VERSION } = require("../package.json");
@@ -18,10 +18,10 @@ if (args.includes("--help") || args.includes("-h")) {
 Usage: mcp-pix-tools [options]
 
 Options:
-  --transport <stdio|sse>  Transport mode (default: stdio)
-  --port <number>          Port for SSE mode (default: 3100)
-  --version, -v            Show version
-  --help, -h               Show this help`);
+  --transport <stdio|http>  Transport mode (default: stdio)
+  --port <number>           Port for HTTP mode (default: 3100)
+  --version, -v             Show version
+  --help, -h                Show this help`);
   process.exit(0);
 }
 
@@ -38,10 +38,10 @@ switch (transport) {
   case "stdio":
     await startStdio(createServer());
     break;
-  case "sse":
-    await startSSE(createServer, port);
+  case "http":
+    await startHTTP(createServer, port);
     break;
   default:
-    console.error(`Unknown transport: ${transport}. Use "stdio" or "sse".`);
+    console.error(`Unknown transport: ${transport}. Use "stdio" or "http".`);
     process.exit(1);
 }

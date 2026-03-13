@@ -16,7 +16,7 @@ An [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server that 
 ### Highlights
 
 - **7 tools** — barcodes (15+ types), ISBN, word clouds, color palettes, placeholders, identicons, charts
-- **Dual transport** — stdio for local clients, SSE for remote/Docker
+- **Dual transport** — stdio for local clients, Streamable HTTP for remote/Docker
 - **PNG + SVG** — all tools output base64 PNG or SVG text
 - **Zero canvas dependency** — no native `canvas` module required
 - **CJK ready** — Docker image includes CJK fonts for word clouds and charts
@@ -48,10 +48,10 @@ npm install -g mcp-pix-tools
 mcp-pix-tools
 ```
 
-### SSE mode (for remote/Docker deployment)
+### HTTP mode (for remote/Docker deployment)
 
 ```bash
-mcp-pix-tools --transport sse --port 3100
+mcp-pix-tools --transport http --port 3100
 ```
 
 ## MCP Client Configuration
@@ -82,12 +82,12 @@ Add the following JSON to your client's MCP config file:
 claude mcp add pix-tools -- npx -y mcp-pix-tools
 ```
 
-**SSE (remote/Docker):**
+**HTTP (remote/Docker):**
 
 ```json
 {
-  "url": "http://localhost:3100/sse",
-  "transport": "sse"
+  "url": "http://localhost:3100/mcp",
+  "transport": "streamable-http"
 }
 ```
 

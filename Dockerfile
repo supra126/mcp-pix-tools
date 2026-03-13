@@ -22,4 +22,4 @@ USER node
 EXPOSE 3100
 ENV NODE_ENV=production
 
-CMD ["node", "dist/index.js", "--transport", "sse", "--port", "3100"]
+CMD ["node", "dist/index.js", "--transport", "http", "--port", "3100"]
