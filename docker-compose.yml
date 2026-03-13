@@ -1,0 +1,15 @@
+services:
+  mcp-pix-tools:
+    image: ghcr.io/supra126/mcp-pix-tools:latest
+    # To build locally instead, comment out "image" and uncomment "build":
+    # build: .
+    ports:
+      - "3100:3100"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3100/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

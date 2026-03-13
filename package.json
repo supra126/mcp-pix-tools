@@ -1,0 +1,66 @@
+{
+  "name": "mcp-pix-tools",
+  "version": "0.1.0",
+  "description": "Programmatic image generation MCP tools — barcodes, word clouds, palettes, charts & more. Zero AI cost.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "mcp-pix-tools": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "start": "node dist/index.js",
+    "start:sse": "node dist/index.js --transport sse",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "biome check .",
+    "lint:fix": "biome check --fix .",
+    "format": "biome format --write ."
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "image-generation",
+    "barcode",
+    "qrcode",
+    "wordcloud",
+    "chart",
+    "palette",
+    "identicon",
+    "placeholder",
+    "isbn"
+  ],
+  "author": "supra126",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/supra126/mcp-pix-tools.git"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "bwip-js": "^4.8.0",
+    "d3-cloud": "^1.2.9",
+    "express": "^5.2.1",
+    "jdenticon": "^3.3.0",
+    "sharp": "^0.34.5",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.6",
+    "@types/d3-cloud": "^1.2.9",
+    "@types/express": "^5.0.6",
+    "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "^4.1.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
+  }
+}

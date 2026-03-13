@@ -1,0 +1,14 @@
+src/
+tests/
+wiki/
+fonts/
+.github/
+*.ts
+!dist/**/*.d.ts
+tsconfig.json
+tsup.config.ts
+docker-compose.yml
+Dockerfile
+.gitignore
+專案規劃.md
+CHANGELOG.md
