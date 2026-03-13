@@ -30,14 +30,14 @@ Add the following JSON to your client's MCP config file:
 claude mcp add pix-tools -- npx -y mcp-pix-tools
 ```
 
-## SSE Clients
+## HTTP Clients
 
-For remote or Docker deployments, use the SSE transport:
+For remote or Docker deployments, use the Streamable HTTP transport:
 
 ```json
 {
-  "url": "http://localhost:3100/sse",
-  "transport": "sse"
+  "url": "http://localhost:3100/mcp",
+  "transport": "streamable-http"
 }
 ```
 

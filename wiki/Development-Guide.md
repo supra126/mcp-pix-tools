@@ -44,7 +44,7 @@ src/
 ├── server.ts             # McpServer creation + all tool registration
 ├── transports/
 │   ├── stdio.ts          # stdio transport
-│   └── sse.ts            # SSE transport (Express)
+│   └── streamableHttp.ts # Streamable HTTP transport
 └── tools/
     ├── barcode.ts        # generate_barcode
     ├── isbn.ts           # generate_isbn
@@ -101,7 +101,7 @@ export function registerMyTool(server: McpServer): void {
 | `sharp` | SVG to PNG conversion |
 | `d3-cloud` | Word cloud layout |
 | `jdenticon` | Identicon generation |
-| `express` | SSE transport HTTP server |
+| `node:http` | Streamable HTTP transport (built-in) |
 | `tsup` | TypeScript bundler |
 | `vitest` | Test framework |
 | `biome` | Linter + formatter |

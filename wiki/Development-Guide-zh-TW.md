@@ -44,7 +44,7 @@ src/
 ├── server.ts             # McpServer 建立 + 所有 tool 註冊
 ├── transports/
 │   ├── stdio.ts          # stdio 傳輸
-│   └── sse.ts            # SSE 傳輸 (Express)
+│   └── streamableHttp.ts # Streamable HTTP 傳輸
 └── tools/
     ├── barcode.ts        # generate_barcode
     ├── isbn.ts           # generate_isbn
@@ -101,7 +101,7 @@ export function registerMyTool(server: McpServer): void {
 | `sharp` | SVG → PNG 轉換 |
 | `d3-cloud` | 詞雲佈局 |
 | `jdenticon` | Identicon 生成 |
-| `express` | SSE 傳輸 HTTP server |
+| `node:http` | Streamable HTTP 傳輸（內建） |
 | `tsup` | TypeScript 打包 |
 | `vitest` | 測試框架 |
 | `biome` | Linter + Formatter |

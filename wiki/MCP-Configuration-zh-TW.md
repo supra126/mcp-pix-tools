@@ -30,14 +30,14 @@
 claude mcp add pix-tools -- npx -y mcp-pix-tools
 ```
 
-## SSE Client
+## HTTP Client
 
-適用於遠端或 Docker 部署：
+適用於遠端或 Docker 部署，使用 Streamable HTTP transport：
 
 ```json
 {
-  "url": "http://localhost:3100/sse",
-  "transport": "sse"
+  "url": "http://localhost:3100/mcp",
+  "transport": "streamable-http"
 }
 ```
 

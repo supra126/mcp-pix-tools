@@ -54,4 +54,4 @@ claude mcp add pix-tools -- npx -y mcp-pix-tools
 ## 下一步
 
 - [完整工具參考](Home-zh-TW) — 每個工具的參數和進階用法
-- [Docker 部署](Docker-Deployment-zh-TW) — 作為遠端 SSE server 執行
+- [Docker 部署](Docker-Deployment-zh-TW) — 作為遠端 HTTP server 執行

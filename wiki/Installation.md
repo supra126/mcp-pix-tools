@@ -35,20 +35,21 @@ mcp-pix-tools --transport stdio
 
 Suitable for Claude Desktop, local MCP clients, and other scenarios that communicate via stdin/stdout.
 
-### SSE (Server-Sent Events)
+### HTTP (Streamable HTTP)
 
 ```bash
-mcp-pix-tools --transport sse --port 3100
+mcp-pix-tools --transport http --port 3100
 ```
 
-Starts an HTTP server with an SSE endpoint. Suitable for remote deployments, Docker environments, and any SSE-compatible MCP client.
+Starts an HTTP server with the MCP Streamable HTTP transport. Suitable for remote deployments, Docker environments, and any HTTP-compatible MCP client.
 
 Available endpoints after startup:
-- `GET /sse` — SSE connection endpoint
-- `POST /messages?sessionId=xxx` — Message endpoint
+- `POST /mcp` — MCP JSON-RPC endpoint
+- `GET /mcp` — Stream for server-initiated notifications
+- `DELETE /mcp` — Close session
 - `GET /health` — Health check
 
 ## System Requirements
 
-- Node.js >= 18
+- Node.js >= 20
 - For PNG output with CJK characters (word clouds, etc.), the corresponding fonts must be installed on the system

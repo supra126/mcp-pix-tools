@@ -56,7 +56,7 @@ Runner 階段已內建：
 ## 自訂連接埠
 
 ```bash
-docker run -p 8080:8080 mcp-pix-tools node dist/index.js --transport sse --port 8080
+docker run -p 8080:8080 mcp-pix-tools node dist/index.js --transport http --port 8080
 ```
 
 ## 健康檢查

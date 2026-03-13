@@ -56,7 +56,7 @@ This ensures PNG output (word clouds, charts, etc.) renders CJK text correctly i
 ## Custom Port
 
 ```bash
-docker run -p 8080:8080 mcp-pix-tools node dist/index.js --transport sse --port 8080
+docker run -p 8080:8080 mcp-pix-tools node dist/index.js --transport http --port 8080
 ```
 
 ## Health Check

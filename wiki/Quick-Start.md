@@ -54,4 +54,4 @@ All tools support both **PNG** and **SVG**. To get SVG output, add "in SVG forma
 ## Next steps
 
 - [Full tool reference](Home) — parameters and advanced usage for each tool
-- [Docker deployment](Docker-Deployment) — run as a remote SSE server
+- [Docker deployment](Docker-Deployment) — run as a remote HTTP server
